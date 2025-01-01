@@ -14,4 +14,6 @@ python -m swebench.harness.run_evaluation \
     --max_workers 1 \
     --instance_ids sympy__sympy-20590 \
     --run_id validate-gold
+
+pip install -r requirements.txt
 ```
