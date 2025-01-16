@@ -111,3 +111,57 @@ FAIL_ONLY_REPOS = {
     "processing/p5.js",
     "markedjs/marked",
 }
+
+
+from collections import defaultdict
+from swebench.harness.log_parsers import parse_log_pytest, MAP_REPO_TO_PARSER
+DEFAULT_SPEC = {
+    "python": "3.9",
+    "packages": "requirements.txt",
+    "pip_packages": [
+        "pytest",
+        "cython",
+        "distro",
+        "pytest-cov",
+        "pytest-xdist",
+        "pytest-mock",
+        "pytest-asyncio",
+        "pytest-bdd",
+        "pytest-benchmark",
+        "pytest-randomly",
+        "responses",
+        "mock",
+        "hypothesis",
+        "freezegun",
+        "trustme",
+        "requests-mock",
+        "requests",
+        "tomlkit",
+    ],
+    "install": "pip install --force-reinstall -e .; pip install -e .[test]; pip install -e .[testing]; pip install -e .[tests]; pip install -e .[dev]",
+    "pre_install": ["apt install -y make gcc g++ pkg-config"],
+}
+MAP_VERSION_TO_INSTALL_PLACEHOLDER = {
+    "": DEFAULT_SPEC,
+    0: DEFAULT_SPEC,
+}
+MAP_REPO_TO_REQS_PATHS_PLACEHOLDER = [
+    "requirements.txt",
+    "requirements-dev.txt",
+    "requirements-test.txt",
+    "requirements_test.txt",
+    "requirements_dev.txt",
+]
+TEST_PYTEST_WO_DEPRECATION = (
+    "pytest --no-header -rA --tb=no  -p no:cacheprovider -W ignore::DeprecationWarning"
+)
+
+
+MAP_REPO_TO_REQS_PATHS = defaultdict(
+    lambda: MAP_REPO_TO_REQS_PATHS_PLACEHOLDER, MAP_REPO_TO_REQS_PATHS
+)
+
+MAP_REPO_VERSION_TO_SPECS = defaultdict(
+    lambda: MAP_VERSION_TO_INSTALL_PLACEHOLDER, MAP_REPO_VERSION_TO_SPECS
+)
+MAP_REPO_TO_PARSER = defaultdict(lambda: parse_log_pytest, MAP_REPO_TO_PARSER)
