@@ -1,6 +1,7 @@
 from enum import Enum
 from pathlib import Path
 from typing import TypedDict
+from collections import defaultdict
 
 # Constants - Evaluation Log Directories
 BASE_IMAGE_BUILD_DIR = Path("logs/build_images/base")
@@ -112,9 +113,6 @@ FAIL_ONLY_REPOS = {
     "markedjs/marked",
 }
 
-
-from collections import defaultdict
-from swebench.harness.log_parsers import parse_log_pytest, MAP_REPO_TO_PARSER
 DEFAULT_SPEC = {
     "python": "3.9",
     "packages": "requirements.txt",
@@ -155,13 +153,3 @@ MAP_REPO_TO_REQS_PATHS_PLACEHOLDER = [
 TEST_PYTEST_WO_DEPRECATION = (
     "pytest --no-header -rA --tb=no  -p no:cacheprovider -W ignore::DeprecationWarning"
 )
-
-
-MAP_REPO_TO_REQS_PATHS = defaultdict(
-    lambda: MAP_REPO_TO_REQS_PATHS_PLACEHOLDER, MAP_REPO_TO_REQS_PATHS
-)
-
-MAP_REPO_VERSION_TO_SPECS = defaultdict(
-    lambda: MAP_VERSION_TO_INSTALL_PLACEHOLDER, MAP_REPO_VERSION_TO_SPECS
-)
-MAP_REPO_TO_PARSER = defaultdict(lambda: parse_log_pytest, MAP_REPO_TO_PARSER)
