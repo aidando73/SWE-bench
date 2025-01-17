@@ -5,6 +5,8 @@ source ~/miniconda3/bin/activate ./env
 
 pip install -e .
 
+screen -S run_evaluation && source ~/miniconda3/bin/activate ./env
+
 pip install -e . && \
 version=v33 && \
 python -m swebench.harness.run_evaluation \
@@ -12,5 +14,5 @@ python -m swebench.harness.run_evaluation \
     --max_workers 16 \
     --dataset_name princeton-nlp/SWE-bench \
     --split train \
-    --run_id $version
+    --run_id $version | tee -a run_evaluation.log
 ```
