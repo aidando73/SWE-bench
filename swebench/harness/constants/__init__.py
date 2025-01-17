@@ -1,6 +1,7 @@
 from swebench.harness.constants.constants import *
 from swebench.harness.constants.javascript import *
 from swebench.harness.constants.python import *
+from collections import defaultdict
 
 MAP_REPO_VERSION_TO_SPECS = {
     **MAP_REPO_VERSION_TO_SPECS_JS,
@@ -19,3 +20,12 @@ MAP_REPO_TO_EXT = {
 
 LATEST = "latest"
 USE_X86 = USE_X86_PY
+
+
+MAP_REPO_TO_REQS_PATHS = defaultdict(
+    lambda: MAP_REPO_TO_REQS_PATHS_PLACEHOLDER, MAP_REPO_TO_REQS_PATHS
+)
+
+MAP_REPO_VERSION_TO_SPECS = defaultdict(
+    lambda: MAP_VERSION_TO_INSTALL_PLACEHOLDER, MAP_REPO_VERSION_TO_SPECS
+)
