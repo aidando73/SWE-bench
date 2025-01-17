@@ -12,8 +12,7 @@ version=v33 && \
 python -m swebench.harness.run_evaluation \
     --predictions_path ~/dev/l2-llama/fine-tune/$version/all_preds.jsonl \
     --max_workers 16 \
-    --dataset_name princeton-nlp/SWE-bench \
-    --split train \
+    --dataset_name ~/dev/l2-llama/fine-tune/v33/swe-train-500.jsonl \
     --run_id $version | tee -a run_evaluation.log
 
 pip install -e . && \
