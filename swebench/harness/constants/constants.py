@@ -1,6 +1,7 @@
 from enum import Enum
 from pathlib import Path
 from typing import TypedDict
+from collections import defaultdict
 
 # Constants - Evaluation Log Directories
 BASE_IMAGE_BUILD_DIR = Path("logs/build_images/base")
@@ -111,3 +112,44 @@ FAIL_ONLY_REPOS = {
     "processing/p5.js",
     "markedjs/marked",
 }
+
+DEFAULT_SPEC = {
+    "python": "3.9",
+    "packages": "requirements.txt",
+    "pip_packages": [
+        "pytest",
+        "cython",
+        "distro",
+        "pytest-cov",
+        "pytest-xdist",
+        "pytest-mock",
+        "pytest-asyncio",
+        "pytest-bdd",
+        "pytest-benchmark",
+        "pytest-randomly",
+        "responses",
+        "mock",
+        "hypothesis",
+        "freezegun",
+        "trustme",
+        "requests-mock",
+        "requests",
+        "tomlkit",
+    ],
+    "install": "pip install --force-reinstall -e .; pip install -e .[test]; pip install -e .[testing]; pip install -e .[tests]; pip install -e .[dev]",
+    "pre_install": ["apt install -y make gcc g++ pkg-config"],
+}
+MAP_VERSION_TO_INSTALL_PLACEHOLDER = {
+    "": DEFAULT_SPEC,
+    0: DEFAULT_SPEC,
+}
+MAP_REPO_TO_REQS_PATHS_PLACEHOLDER = [
+    "requirements.txt",
+    "requirements-dev.txt",
+    "requirements-test.txt",
+    "requirements_test.txt",
+    "requirements_dev.txt",
+]
+TEST_PYTEST_WO_DEPRECATION = (
+    "pytest --no-header -rA --tb=no  -p no:cacheprovider -W ignore::DeprecationWarning"
+)
