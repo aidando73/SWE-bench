@@ -223,6 +223,8 @@ def get_requirements_by_commit(repo: str, commit: str) -> str:
     for req_path in MAP_REPO_TO_REQS_PATHS[repo]:
         reqs_url = os.path.join(SWE_BENCH_URL_RAW, repo, commit, req_path)
         reqs = requests.get(reqs_url, headers=HEADERS)
+        print(reqs_url)
+        print(reqs)
         if reqs.status_code == 200:
             break
     else:
@@ -277,7 +279,7 @@ def get_requirements(instance: SWEbenchInstance) -> str:
     # Attempt to find requirements.txt at each path based on task instance's repo
     commit = (
         instance["environment_setup_commit"]
-        if "environment_setup_commit" in instance
+        if "environment_setup_commit" in instance and instance["environment_setup_commit"] != ""
         else instance["base_commit"]
     )
 

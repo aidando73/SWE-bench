@@ -183,7 +183,16 @@ def make_env_script_list(instance: SWEbenchInstance, specs: dict, env_name: str)
     ]
     # Create conda environment according to install instructinos
     pkgs = specs.get("packages", "")
+
     if pkgs == "requirements.txt":
+        try:
+            requirements_txt = get_requirements(instance)
+        except Exception as e:
+            print("No requirements.txt found, using default spec")
+            requirements_txt = None
+            pkgs = ""
+
+    if requirements_txt:
         # Create environment
         cmd = f"conda create -n {env_name} python={specs['python']} -y"
         reqs_commands.append(cmd)
